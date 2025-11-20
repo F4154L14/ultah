@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Selamat Ulang Tahun, sayang💖</title>
+<style>
+  /* --- Reset & layout --- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html,body { height: 100%; font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; }
+  body {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background: linear-gradient(180deg, #e0007846 0%, #ffeef6 50%, #fffaf0 100%);
+    overflow: hidden;
+    color:#ffffff;
+  }
+
+  /* --- Card / container --- */
+  .card {
+    width: 92vw;
+    max-width: 900px;
+    height: 82vh;
+    max-height: 640px;
+    border-radius: 20px;
+    box-shadow: 0 15px 50px rgba(20,10,20,0.12);
+    position: relative;
+    overflow: hidden;
+    background: radial-gradient(circle at 20% 10%, rgba(218, 1, 95, 0.395), transparent 20%),
+                linear-gradient(180deg, rgba(255,255,255,0.25), rgba(255,255,255,0.05));
+  }
+
+  /* --- soft vignette --- */
+  .card::after {
+    content: "";
+    position:absolute; inset:0;
+    pointer-events:none;
+    background: radial-gradient(60% 60% at 50% 40%, rgba(0,0,0,0) 0%, rgba(0,0,0,0.06) 60%, rgba(0,0,0,0.12) 100%);
+  }
+
+  /* --- Slideshow area --- */
+  .slideshow {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide {
+    position: absolute;
+    width: 72%;
+    height: 78%;
+    max-height: 520px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+    transform-origin: center;
+    border: 8px solid rgba(255,255,255,0.35);
+    background: #3e3a3a;
+    opacity: 0;
+    transition: opacity 1.2s ease, transform 1.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display:block;
+  }
+
+  /* --- crossfade sequence (via CSS keyframes) --- */
+  @keyframes crossfade {
+    0%   { opacity: 0; transform: scale(1.02); }
+    7%   { opacity: 1; transform: scale(1); }
+    45%  { opacity: 1; transform: scale(1); }
+    52%  { opacity: 0; transform: scale(0.98); }
+    100% { opacity: 0; transform: scale(0.98); }
+  }
+  /* two slides, each 8s cycle (total 16s) with slight offset */
+  .slide.s1 { animation: crossfade 16s infinite ease-in-out 0s; }
+  .slide.s2 { animation: crossfade 16s infinite ease-in-out 8s; }
+
+  /* --- Caption area (name & message) --- */
+  .caption {
+    position: absolute;
+    right: 6%;
+    top: 12%;
+    width: 36%;
+    min-width: 220px;
+    color: #3a2b33;
+    text-align: left;
+    z-index: 10;
+  }
+  .caption h1 {
+    font-size: clamp(28px, 3.6vw, 44px);
+    color: #090000;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+    line-height: 1;
+    text-shadow: 0 3px 14px rgba(0, 0, 0, 0.25);
+  }
+  .caption h1 .heart {
+    color: #d40c63;
+    margin-left: 8px;
+    font-size: 0.9em;
+    transform: translateY(-2px);
+  }
+  .caption p {
+    margin-top: 12px;
+    color: #000000;
+    font-size: clamp(14px, 1.6vw, 18px);
+    opacity: 0.95;
+  }
+
+  /* --- small note / from --- */
+  .from {
+    position: absolute;
+    left: 6%;
+    bottom: 6%;
+    font-size: 14px;
+    color: rgba(0, 0, 0, 0.7);
+    z-index: 12;
+  }
+
+  /* --- floating hearts / petals --- */
+  .petal {
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    background: radial-gradient(circle at 30% 30%, #ffffff, #ffd6e6 30%, #ff9ab6 100%);
+    transform: rotate(45deg);
+    border-radius: 50% 50% 50% 10%;
+    opacity: 0.9;
+    filter: drop-shadow(0 3px 10px rgba(0, 0, 0, 0.2));
+    animation: floatUp linear infinite;
+    will-change: transform, opacity;
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 1; }
+    100% { transform: translateY(-140vh) rotate(200deg) scale(0.8); opacity: 0; }
+  }
+  /* place several petals with different delays/sizes */
+  .petal.p1 { left: 10%; bottom: -10%; animation-duration: 14s; animation-delay: 0s; width:20px; height:20px; }
+  .petal.p2 { left: 24%; bottom: -8%; animation-duration: 12s; animation-delay: 2s; width:26px; height:26px; }
+  .petal.p3 { left: 42%; bottom: -12%; animation-duration: 16s; animation-delay: 1s; width:18px; height:18px; }
+  .petal.p4 { left: 68%; bottom: -10%; animation-duration: 13s; animation-delay: 3s; width:24px; height:24px; }
+  .petal.p5 { left: 82%; bottom: -9%; animation-duration: 15s; animation-delay: 4s; width:22px; height:22px; }
+
+  /* --- play/pause music button --- */
+  .music-btn {
+    position: absolute;
+    right: 6%;
+    bottom: 6%;
+    background: rgba(205, 199, 199, 0.92);
+    border-radius: 999px;
+    padding: 8px 12px;
+    display:flex; gap:8px; align-items:center;
+    box-shadow: 0 8px 18px rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+    z-index: 15;
+    user-select: none;
+  }
+  .music-btn .dot {
+    width:10px; height:10px; border-radius:50%; background:#b10044;
+    box-shadow: 0 2px 6px rgba(25, 24, 24, 0.6);
+  }
+  .music-btn span { font-size: 14px; color:#3b2a33; }
+
+  /* --- small responsiveness --- */
+  @media (max-width:800px) {
+    .caption { position: absolute; left: 6%; top: auto; bottom: 14%; width: 86%; text-align:center; }
+    .caption h1 { font-size: 28px; }
+    .caption p { font-size: 15px; }
+    .slideshow .slide { width: 86%; height: 58%; }
+    .music-btn { right: 6%; bottom: 2%; }
+  }
+</style>
+</head>
+<body>
+
+  <div class="card" role="main" aria-label="Ucapan ulang tahun untuk Yuyun">
+    <div class="slideshow" aria-hidden="false">
+      ><div class="slide s1"><img src="WhatsApp Image 2025-07-19 at 14.02.58_9c9cf5c0.jpg" alt="Foto Yuyun 1"></div>
+      <div class="slide s2"><img src="ynyn.jpg" alt="Foto Yuyun 2"></div>
+      <div class="slide s2"><img src="1.jpg" alt="Foto Yuyun 3"></div>
+      <div class="slide s2"><img src="hh.jpg" alt="Foto Yuyun 4"></div>
+      <div class="slide s2"><img src="u.jpg" alt="Foto Yuyun 5"></div>
+      <div class="slide s2"><img src="uuuuu.jpg" alt="Foto Yuyun 6"></div>
+    </div>
+
+    <div class="caption" aria-hidden="false">
+      <h1>Selamat Ulang Tahun, <strong>Sayang</strong> <span class="heart">♥</span></h1>
+      <p>Hari ini adalah hari spesial untukmu. Semoga setiap langkah dipenuhi cinta, kesehatan, dan kebahagiaan. Terus bersinar seperti yang biasa kamu lakukan 💞</p>
+    </div>
+
+    <div class="from">✨ Dengan doa terbaik dari aku</div>
+
+    <!-- floating petals -->
+    <div class="petal p1"></div>
+    <div class="petal p2"></div>
+    <div class="petal p3"></div>
+    <div class="petal p4"></div>
+    <div class="petal p5"></div>
+
+    <!-- music control -->
+    <div class="music-btn" id="musicBtn" title="Putar / Hentikan musik">
+      <div class="dot" aria-hidden="true"></div>
+      <span id="musicLabel">Memutar musik</span>
+    </div>
+
+    <!-- audio (romantis lembut) -->
+    <audio id="bgMusic" loop>
+      <!-- jika autoplay diblokir oleh browser, pengguna bisa klik tombol play -->
+      <source src="ultah.mp3" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+  </div>
+
+<script>
+  // Music play/pause handling with visual label
+  const music = document.getElementById('bgMusic');
+  const btn = document.getElementById('musicBtn');
+  const label = document.getElementById('musicLabel');
+
+  // Try to autoplay (may be blocked by browser). If allowed, play and update label.
+  function tryAutoplay() {
+    music.volume = 0.7;
+    music.play().then(() => {
+      label.textContent = 'Memutar musik';
+    }).catch(() => {
+      label.textContent = 'Klik untuk memutar musik';
+    });
+  }
+  tryAutoplay();
+
+  btn.addEventListener('click', () => {
+    if (music.paused) {
+      music.play();
+      label.textContent = 'Memutar musik';
+    } else {
+      music.pause();
+      label.textContent = 'Musik dihentikan';
+    }
+  });
+
+  // gentle entrance animations for caption & small accessibility improvement
+  window.addEventListener('load', () => {
+    const cap = document.querySelector('.caption');
+    cap.style.transform = 'translateY(6px)';
+    cap.style.opacity = '0';
+    setTimeout(() => {
+      cap.style.transition = 'opacity 900ms ease, transform 900ms ease';
+      cap.style.opacity = '1';
+      cap.style.transform = 'translateY(0)';
+    }, 300);
+
+    // small popup after delay (non-intrusive)
+    setTimeout(() => {
+      // Use confirm-style friendly message (no heavy alert)
+      if (confirm("🎉 Kirim ucapan selamat untuk Yuyun sekarang? (Tekan 'OK' untuk menyimpan html dan bagikan)")) {
+        // If OK, open the print dialog as a simple "save" or share step
+        window.print();
+      }
+    }, 5500);
+  });
+
+  // Accessibility: keyboard control for music (space toggles)
+  document.addEventListener('keydown', (e) => {
+    if (e.code === 'Space') {
+      e.preventDefault();
+      btn.click();
+    }
+  });
+
+</script>
+</body>
+</html>
